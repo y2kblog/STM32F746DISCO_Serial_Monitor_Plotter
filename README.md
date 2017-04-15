@@ -3,11 +3,10 @@
 <http://y2kblog.seesaa.net/article/SerialMonitorPlotter_STM32F7-Discovery.html>
 )
 
-## Images
-### Serial Monitor
+## Serial Monitor
 ![](https://github.com/y2kblog/STM32F746DISCO_Serial_Monitor_Plotter/blob/master/images/SerialMonitor.jpg)
 
-### Serial Plotter
+## Serial Plotter
 ![](https://github.com/y2kblog/STM32F746DISCO_Serial_Monitor_Plotter/blob/master/images/SerialPlotter.jpg)
 
 
