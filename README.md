@@ -12,6 +12,8 @@
 
 ## Let's just try
 Drag & Drop "/STM32746G_DISCOVERY.bin" into the STM32F7 Discovery drive.
+Connect pin of STM32F7 discovery is arduino D0(RX) pin.
+
 If you have another mbed microcontroller device, you can use "/CommunicationTestCode_mbed_NUCLEO-F411RE/main.cpp" to test communication.
 
 ## IDE
