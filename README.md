@@ -34,7 +34,7 @@ System Workbench for STM32 (SW4STM32) + STM32CubeF7
 
 ### Serial Plotter
 * Max number of display points : 8
-* Numeric format : Decimal (ex. "-10.0")
+* Numeric format : Decimal (ex. "-10.0") or Integer (ex. "100")
 * Max value : config PLOTTER_MAX_VALUE_1 ~ PLOTTER_MAX_VALUE_8 in "Inc/SerialMonitorPlotter.h"
 * Min value : config PLOTTER_MIN_VALUE_1 ~ PLOTTER_MIN_VALUE_8 in "Inc/SerialMonitorPlotter.h"
 * Token : config PLOTTER_TOKEN in "Inc/SerialMonitorPlotter.h" (default : ",")
