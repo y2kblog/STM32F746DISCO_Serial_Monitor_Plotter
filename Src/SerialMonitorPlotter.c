@@ -93,7 +93,8 @@ void SMP_Thread(void const *argument)
 void createSMPWindow(void)
 {
 	UG_WindowCreate(this_wnd, obj_SMP, uGUI_SMP_OBJECTS, window_callback);
-	sprintf(SMP_Title, "%s ver%d", SERIAL_MONITOR_PLOTTER_TITLE, SERIAL_MONITOR_PLOTTER_VERSION);
+	for(uint8_t i = 0; i < COUNTOF(SMP_Title); i++) SMP_Title[i] = '\0';
+	sprintf(SMP_Title, "%s ver%s", SERIAL_MONITOR_PLOTTER_TITLE, SERIAL_MONITOR_PLOTTER_VERSION);
 	UG_WindowSetTitleText(this_wnd, SMP_Title);
 	UG_WindowSetTitleTextFont(this_wnd, &FONT_10X16);
 	UG_WindowResize(this_wnd, 0, 0, BSP_LCD_GetXSize(), BSP_LCD_GetYSize() );
@@ -135,14 +136,15 @@ void createSMPWindow(void)
     UG_ButtonSetFont(this_wnd, SMP_BTN_ID_pause, &FONT_8X12);
     UG_ButtonSetText(this_wnd, SMP_BTN_ID_pause, "Pause");
 
-    UG_ButtonCreate(this_wnd, &btn_SMP_record, SMP_BTN_ID_record,
+    UG_ButtonCreate(this_wnd, &btn_SMP_record, SMP_BTN_ID_clear,
             UG_WindowGetInnerWidth(this_wnd) * 3 / 5 + 1,
             UG_WindowGetInnerHeight(this_wnd) - 1 - SMP_BUTTON_HEIGHT,
             UG_WindowGetInnerWidth(this_wnd) * 4 / 5 - 1,
             UG_WindowGetInnerHeight(this_wnd) - 1);
-    UG_ButtonSetBackColor(this_wnd, SMP_BTN_ID_record, C_WHITE_SMOKE);
-    UG_ButtonSetFont(this_wnd, SMP_BTN_ID_record, &FONT_8X12);
-    //UG_ButtonSetText(this_wnd, SMP_BTN_ID_record, "Record");
+    UG_ButtonSetBackColor(this_wnd, SMP_BTN_ID_clear, C_WHITE_SMOKE);
+    UG_ButtonSetFont(this_wnd, SMP_BTN_ID_clear, &FONT_8X12);
+    UG_ButtonSetText(this_wnd, SMP_BTN_ID_clear, "Clear");
+    //UG_ButtonSetText(this_wnd, SMP_BTN_ID_clear, "Record");
 
     UG_ButtonCreate(this_wnd, &btn_SMP_close, SMP_BTN_ID_close,
             UG_WindowGetInnerWidth(this_wnd) * 4 / 5 + 1,
@@ -217,19 +219,27 @@ static void window_callback(UG_MESSAGE* msg)
                 }
 			    break;
 
-			case SMP_BTN_ID_record:
+			case SMP_BTN_ID_clear:
+			    /* Data clear */
+			    if(MonitorMode == true)
+			        initMonitorMode();
+                else
+                    initPlotterMode();
+			    
+			    /*
 			    if (isRecording == true)
                 {
-                    /* End recording */
+                    // End recording 
 			        isRecording = false;
-                    UG_ButtonSetBackColor(this_wnd, SMP_BTN_ID_record, C_WHITE_SMOKE);
+                    UG_ButtonSetBackColor(this_wnd, SMP_BTN_ID_clear, C_WHITE_SMOKE);
                 }
                 else
                 {
-                    /* Start recording */
+                    // Start recording
                     isRecording = true;
-                    UG_ButtonSetBackColor(this_wnd, SMP_BTN_ID_record, C_TOMATO);
+                    UG_ButtonSetBackColor(this_wnd, SMP_BTN_ID_clear, C_TOMATO);
                 }
+			    */
 			    break;
 
 			case SMP_BTN_ID_close:

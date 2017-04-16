@@ -22,7 +22,7 @@ extern "C" {
 /* ---------------------------------------------------------------- */
 /* -- User setting Configuration                                 -- */
 /* ---------------------------------------------------------------- */
-#define SERIAL_MONITOR_PLOTTER_VERSION     2
+#define SERIAL_MONITOR_PLOTTER_VERSION     "3.0"
 
 /* General setting */
 /* Receive line feed code (define only one) */
@@ -83,7 +83,7 @@ enum SMP_BTN_ID
     SMP_BTN_ID_switchMonitorPlotter = BTN_ID_0,
     SMP_BTN_ID_baudrate,
     SMP_BTN_ID_pause,
-    SMP_BTN_ID_record,
+    SMP_BTN_ID_clear,
     SMP_BTN_ID_close
 };
 
@@ -100,7 +100,7 @@ UG_BUTTON    btn_SMP_baudrate;
 UG_BUTTON    btn_SMP_pause;
 UG_BUTTON    btn_SMP_record;
 UG_BUTTON    btn_SMP_close;
-char SMP_Title[30];
+char SMP_Title[32];
 
 bool isPause;
 
