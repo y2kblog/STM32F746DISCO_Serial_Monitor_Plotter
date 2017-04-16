@@ -36,6 +36,7 @@ extern "C" {
 #define MONITOR_FONT_SIZE   FONT_6X10
 
 /* Plotter */
+#define PLOTTER_TOKEN       ","
 #define PLOTTER_MAX_VALUE   100
 #define PLOTTER_MIN_VALUE   -100
 /* Plotter : Draw style */

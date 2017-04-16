@@ -345,9 +345,9 @@ static void execute(void)
                         {
                             if(ValNum == 0)
                                 /* 1st call */
-                                pstr[0] = strtok(Plotter_str_1line, ",");
+                                pstr[0] = strtok(Plotter_str_1line, PLOTTER_TOKEN);
                             else
-                                pstr[ValNum] = strtok(NULL, ",");
+                                pstr[ValNum] = strtok(NULL, PLOTTER_TOKEN);
                             
                             if(pstr[ValNum] == NULL)
                             {

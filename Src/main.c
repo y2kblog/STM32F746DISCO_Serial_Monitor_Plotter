@@ -116,10 +116,10 @@ int main(void)
     console_y_start_default = gui.console.y_start; console_y_end_default = gui.console.y_end;
 
     /* uGUI hardware accelerator */
-    /*UG_DriverRegister(DRIVER_DRAW_LINE, (void*) _HW_DrawLine);
+    UG_DriverRegister(DRIVER_DRAW_LINE, (void*) _HW_DrawLine);
     UG_DriverRegister(DRIVER_FILL_FRAME, (void*) _HW_FillFrame);
     UG_DriverEnable(DRIVER_DRAW_LINE);
-    UG_DriverEnable(DRIVER_FILL_FRAME);*/
+    UG_DriverEnable(DRIVER_FILL_FRAME);
 
     /* uGUI : create window */
     createSMPWindow();
