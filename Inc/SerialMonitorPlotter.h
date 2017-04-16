@@ -22,7 +22,7 @@ extern "C" {
 /* ---------------------------------------------------------------- */
 /* -- User setting Configuration                                 -- */
 /* ---------------------------------------------------------------- */
-#define SERIAL_MONITOR_PLOTTER_VERSION     1
+#define SERIAL_MONITOR_PLOTTER_VERSION     2
 
 /* General setting */
 /* Receive line feed code (define only one) */
