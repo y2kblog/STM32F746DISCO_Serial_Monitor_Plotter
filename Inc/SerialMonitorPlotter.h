@@ -35,10 +35,28 @@ extern "C" {
 /* Monitor */
 #define MONITOR_FONT_SIZE   FONT_6X10
 
-/* Plotter */
-#define PLOTTER_TOKEN       ","
-#define PLOTTER_MAX_VALUE   100
-#define PLOTTER_MIN_VALUE   -100
+/* Plotter : General */
+#define PLOTTER_TOKEN           ","
+/* Plotter : Value range */
+#define PLOTTER_DRAW_MAX_VALUE   100
+#define PLOTTER_DRAW_MIN_VALUE   -100
+#define PLOTTER_MAX_DIGITS       14      /* include a sign and a decimal point */
+#define PLOTTER_MAX_VALUE_1      100.0
+#define PLOTTER_MIN_VALUE_1     -100.0
+#define PLOTTER_MAX_VALUE_2      100.0
+#define PLOTTER_MIN_VALUE_2     -100.0
+#define PLOTTER_MAX_VALUE_3      100.0
+#define PLOTTER_MIN_VALUE_3     -100.0
+#define PLOTTER_MAX_VALUE_4      100.0
+#define PLOTTER_MIN_VALUE_4     -100.0
+#define PLOTTER_MAX_VALUE_5      100.0
+#define PLOTTER_MIN_VALUE_5     -100.0
+#define PLOTTER_MAX_VALUE_6      100.0
+#define PLOTTER_MIN_VALUE_6     -100.0
+#define PLOTTER_MAX_VALUE_7      100.0
+#define PLOTTER_MIN_VALUE_7     -100.0
+#define PLOTTER_MAX_VALUE_8      100.0
+#define PLOTTER_MIN_VALUE_8     -100.0
 /* Plotter : Draw style */
 #define PLOTTER_X_INCREMENT 1
 #define PLOTTER_COLOR_1     C_BLACK

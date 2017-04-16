@@ -24,8 +24,18 @@ static char str_UART_Receive[UART_QUEUE_BUFFER_SIZE];
 const static UG_COLOR Plotter_color[8] = {
     PLOTTER_COLOR_1, PLOTTER_COLOR_2, PLOTTER_COLOR_3, PLOTTER_COLOR_4,
     PLOTTER_COLOR_5, PLOTTER_COLOR_6, PLOTTER_COLOR_7, PLOTTER_COLOR_8};
-static char Plotter_str_1line[8*12+3];
-static int32_t Plotter_RawVal[8];
+struct st_Plotter_ValRange {
+    float max;
+    float min;
+};
+const static struct st_Plotter_ValRange Plotter_ValRange[8] = {
+    {PLOTTER_MAX_VALUE_1, PLOTTER_MIN_VALUE_1}, {PLOTTER_MAX_VALUE_2, PLOTTER_MIN_VALUE_2}, 
+    {PLOTTER_MAX_VALUE_3, PLOTTER_MIN_VALUE_3}, {PLOTTER_MAX_VALUE_4, PLOTTER_MIN_VALUE_4}, 
+    {PLOTTER_MAX_VALUE_5, PLOTTER_MIN_VALUE_5}, {PLOTTER_MAX_VALUE_6, PLOTTER_MIN_VALUE_6}, 
+    {PLOTTER_MAX_VALUE_7, PLOTTER_MIN_VALUE_7}, {PLOTTER_MAX_VALUE_8, PLOTTER_MIN_VALUE_8}
+};
+static char Plotter_str_1line[8*PLOTTER_MAX_DIGITS+3];
+static float Plotter_RawVal[8];
 static int32_t Plotter_DrawVal[8], Plotter_prevDrawVal[8];
 static UG_S16 Plotter_X_position;
 
@@ -325,7 +335,7 @@ static void execute(void)
             for (uint32_t i = 0; i < str_len; i++)
             {
                 /* check if the string is valid for plotter */
-                if( ( isdigit(str_UART_Receive[i]) ) || (str_UART_Receive[i] == '-') || (str_UART_Receive[i] == ',') || (str_UART_Receive[i] == '\n') )
+                if( ( isdigit(str_UART_Receive[i]) ) || (str_UART_Receive[i] == '.') || (str_UART_Receive[i] == '-') || (str_UART_Receive[i] == *(PLOTTER_TOKEN)) || (str_UART_Receive[i] == '\n') )
                 {
                     /* check line feed */
                     if(str_UART_Receive[i] != '\n')
@@ -355,25 +365,38 @@ static void execute(void)
                             }
                         }
                         
-                        /* Convert string -> Raw value (integer) */
+                        /* Convert string -> Raw value (float) */
                         for (uint8_t j = 0; j < ValNum; j++)
                         {
-                            Plotter_RawVal[j] = atoi(pstr[j]);
+                            Plotter_RawVal[j] = (float)atof(pstr[j]);
                         }
                         
                         /* Raw value range limitation */
                         for (uint8_t j = 0; j < ValNum; j++)
                         {
-                            if(Plotter_RawVal[j] >= PLOTTER_MAX_VALUE)
-                                Plotter_RawVal[j] = PLOTTER_MAX_VALUE;
-                            if(Plotter_RawVal[j] <= PLOTTER_MIN_VALUE)
-                                Plotter_RawVal[j] = PLOTTER_MIN_VALUE;
+                            if(Plotter_RawVal[j] >= Plotter_ValRange[j].max)
+                                Plotter_RawVal[j] = Plotter_ValRange[j].max;
+                            if(Plotter_RawVal[j] <= Plotter_ValRange[j].min)
+                                Plotter_RawVal[j] = Plotter_ValRange[j].min;
                         }
                         
                         /* Convert Raw value -> Draw value (ex. scaling) */
                         for (uint8_t j = 0; j < ValNum; j++)
                         {
-                            Plotter_DrawVal[j] = -Plotter_RawVal[j] * 1;
+                            //Plotter_DrawVal[j] = -Plotter_RawVal[j] * 1.0f;
+                            Plotter_DrawVal[j] = 
+                                    (float)(PLOTTER_DRAW_MAX_VALUE - PLOTTER_DRAW_MIN_VALUE) / (Plotter_ValRange[j].max - Plotter_ValRange[j].min)
+                                    * (Plotter_RawVal[j] - Plotter_ValRange[j].min) + PLOTTER_DRAW_MIN_VALUE;
+                            Plotter_DrawVal[j] *= -1.0f;    /* Sign inversion because upper of display = y pixel value is low */
+                        }
+                        
+                        /* Draw value range limitation */
+                        for (uint8_t j = 0; j < ValNum; j++)
+                        {
+                            if (Plotter_DrawVal[j] >= PLOTTER_DRAW_MAX_VALUE)
+                                Plotter_DrawVal[j] =  PLOTTER_DRAW_MAX_VALUE;
+                            if (Plotter_DrawVal[j] <= PLOTTER_DRAW_MIN_VALUE)
+                                Plotter_DrawVal[j] =  PLOTTER_DRAW_MIN_VALUE;
                         }
                         
                         /* --- Draw --- */
@@ -397,7 +420,7 @@ static void execute(void)
                             initPlotterMode();
                         
                         /* Clear string */
-                        for (uint32_t j = 0; j < (8*12+3); j++)
+                        for (uint32_t j = 0; j < (8*PLOTTER_MAX_DIGITS+3); j++)
                             Plotter_str_1line[j] = '\0';
                     }
                 }
@@ -425,7 +448,7 @@ static void finalize(void)
 void ActivateThread(void)
 {
 	vTaskPrioritySet(this_xHandle, Priority_High);
-	UG_ConsoleSetArea(5, 25, UG_WindowGetInnerWidth(this_wnd) - 5, 225);
+	UG_ConsoleSetArea(5, 25, UG_WindowGetInnerWidth(this_wnd) - 5, 226);
 	UG_WindowShow(this_wnd);
 }
 

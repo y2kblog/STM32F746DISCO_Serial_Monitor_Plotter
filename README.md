@@ -12,14 +12,15 @@
 
 ## Let's just try
 Drag & Drop "/STM32746G_DISCOVERY.bin" into the STM32F7 Discovery drive.
+If you have another mbed microcontroller device, you can use "/CommunicationTestCode_mbed_NUCLEO-F411RE/main.cpp" to test communication.
 
 ## IDE
-System Workbench for STM32(SW4STM32) + STM32CubeF7
+System Workbench for STM32 (SW4STM32) + STM32CubeF7
 
 ## Project file location
 "STM32Cube_FW_F7_V1.x.x\Projects\STM32746G-Discovery\Applications\FreeRTOS\STM32F746DISCO_Serial_Monitor_Plotter"
 
-## Specification
+## Specification & Configuration
 ### Communication (UART)
 * Data : 8bit
 * Parity : None
@@ -32,9 +33,10 @@ System Workbench for STM32(SW4STM32) + STM32CubeF7
 * Font size : config MONITOR_FONT_SIZE in "Inc/SerialMonitorPlotter.h" (default : FONT_6X10)
 
 ### Serial Plotter
-* Max display points : 8
-* Max value : 100
-* Min value : -100
+* Max number of display points : 8
+* Numeric format : Decimal (ex. "-10.0")
+* Max value : config PLOTTER_MAX_VALUE_1 ~ PLOTTER_MAX_VALUE_8 in "Inc/SerialMonitorPlotter.h"
+* Min value : config PLOTTER_MIN_VALUE_1 ~ PLOTTER_MIN_VALUE_8 in "Inc/SerialMonitorPlotter.h"
 * Token : config PLOTTER_TOKEN in "Inc/SerialMonitorPlotter.h" (default : ",")
 * X-axis increment : config PLOTTER_X_INCREMENT in "Inc/SerialMonitorPlotter.h" (default : 1)
 * Line color : config PLOTTER_COLOR_1 ~ PLOTTER_COLOR_8 in "Inc/SerialMonitorPlotter.h"
